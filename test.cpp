@@ -22,7 +22,25 @@ float get_cpu_clock_speed () {
     return clock_speed;  
 }
 
+float get_amount_time_since_booted () {
+    FILE* fp;
+    float amount_time, rest_time;
+    char buffer[128];
+    size_t bytes_read;
+    
+    fp = fopen("/proc/uptime", "r");
+    bytes_read = fread(buffer, 1, sizeof(buffer), fp);
+    fclose(fp);
+
+    if (bytes_read == 0 || bytes_read == sizeof(buffer))
+        return 0;
+    buffer[bytes_read] = '\0';
+    sscanf(buffer, "%f %f", &amount_time, &rest_time);
+    return amount_time;
+}
+
 int main (){
-    printf("%4.0f\n", get_cpu_clock_speed());
+    printf("%f\n", get_cpu_clock_speed());
+    printf("%f\n", get_amount_time_since_booted());
     return 0;
 }
