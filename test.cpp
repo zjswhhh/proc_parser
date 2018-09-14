@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <vector>
+using namespace std;
 
 float get_cpu_clock_speed () {
     FILE* fp;
@@ -22,6 +24,23 @@ float get_cpu_clock_speed () {
     return clock_speed;  
 }
 
+char* get_kernel_version () {
+    FILE* fp;
+    char* kenerl_version;
+    char buffer[128];
+    size_t bytes_read;
+    
+    fp = fopen("/proc/version", "r");
+    bytes_read = fread(buffer, 1, sizeof(buffer), fp);
+    fclose(fp);
+
+    if (bytes_read == 0 || bytes_read == sizeof(buffer))
+        return NULL;
+    buffer[bytes_read] = '\0';
+    sscanf(buffer, "Linux version %s (", kenerl_version);
+    return kenerl_version;
+}
+
 float get_amount_time_since_booted () {
     FILE* fp;
     float amount_time, rest_time;
@@ -42,5 +61,6 @@ float get_amount_time_since_booted () {
 int main (){
     printf("%f\n", get_cpu_clock_speed());
     printf("%f\n", get_amount_time_since_booted());
+    printf("%s\n", get_kernel_version());
     return 0;
 }
