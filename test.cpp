@@ -18,5 +18,11 @@ float get_cpu_clock_speed () {
     match = strstr(buffer, "cpu MHz");
     if (match == NULL)
         return 0;
-    sscanf(match, "")  
+    sscanf(match, "cpu MHz		: %f", &clock_speed);
+    return clock_speed;  
+}
+
+int main (){
+    printf("%4.0f\n", get_cpu_clock_speed());
+    return 0;
 }
