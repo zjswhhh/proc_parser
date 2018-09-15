@@ -56,9 +56,8 @@ float get_total_mem () {
     return total_mem;
 }
 
-vector<float> get_time_percentage () {
+void get_time_percentage (float result[3]) {
     FILE* fp;
-    vector<float> result;
     float user_time, nice, sys_time, idle, total;
 
     fp = fopen("/proc/stat", "r");
@@ -71,7 +70,6 @@ vector<float> get_time_percentage () {
     result[1] = ((float)(sys_time/total));
     result[2] = ((float)(idle/total));
 
-    return result;
 }
 
 int main (int argc, char** argv){
@@ -83,10 +81,10 @@ int main (int argc, char** argv){
 	printf("Amount of time since the system was last booted: %.1lf Seconds \n", get_amount_time_since_booted());
     }  
     else if(argc == 3) {
-        vector<float> time_percentage;
-        time_percentage = get_time_percentage();
+        float t[3];
+        get_time_percentage(t);
         for(int i = 0; i < 3; i++)
-            printf("%f ", time_percentage[i]);
+            printf("%f ", t[i]);
         printf("\n");
     }
     else {
