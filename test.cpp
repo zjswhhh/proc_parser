@@ -20,7 +20,7 @@ char* get_processor_type (char* s) {
     match = strstr(buffer, "model name");
     if (match == NULL)
         return s;
-    sscanf(match, "model name	: %[^\t\n]Stepping ", s);
+    sscanf(match, "model name	/: %[^\t\n]stepping ", s);
     return s;
 }
 
