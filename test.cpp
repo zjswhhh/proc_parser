@@ -24,7 +24,7 @@ float get_cpu_clock_speed () {
     return clock_speed;  
 }
 
-char* get_kernel_version () {
+char* get_kernel_version (char* s, int len) {
     FILE* fp;
     char* kenerl_version;
     char buffer[128];
@@ -38,7 +38,14 @@ char* get_kernel_version () {
         return NULL;
     buffer[bytes_read] = '\0';
     sscanf(buffer, "Linux version %s (", kenerl_version);
-    return kenerl_version;
+    
+
+    if(s) { 
+        strncpy(s,   kenerl_version,   len-1); 
+        s[len-1]   =   0; 
+    } 
+
+    return   s; 
 }
 
 float get_amount_time_since_booted () {
@@ -61,6 +68,7 @@ float get_amount_time_since_booted () {
 int main (){
     printf("%f\n", get_cpu_clock_speed());
     printf("%f\n", get_amount_time_since_booted());
-    printf("%s\n", get_kernel_version());
+    char s[30];
+    printf("%s\n", get_kernel_version(s, 30));
     return 0;
 }
