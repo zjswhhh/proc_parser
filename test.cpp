@@ -54,12 +54,29 @@ float get_total_mem () {
     return total_mem;
 }
 
+double get_user_mode_time (){
+    FILE* fp;
+    double user_time;
+
+    fp = fopen("/proc/stat", "r");
+    fscanf(fp, "lf")
+}
 
 int main (int argc, char** argv){
-    char s[100];
-    printf("Processor type: %s \n", get_processor_type(s));
-    printf("Kernel Version: %s \n", get_kernel_version(s));
-    printf("The amount of memory configured into this computer: %.1f KB \n", get_total_mem());
-    printf("Amount of time since the system was last booted: %.1lf Seconds \n", get_amount_time_since_booted());
+    if(argc == 1) {
+    	char s[100];
+        printf("Processor type: %s \n", get_processor_type(s));
+        printf("Kernel Version: %s \n", get_kernel_version(s));
+        printf("The amount of memory configured into this computer: %.1f KB \n", get_total_mem());
+	printf("Amount of time since the system was last booted: %.1lf Seconds \n", get_amount_time_since_booted());
+    }  
+    else if(argc == 3) {
+        
+    }
+    else {
+    	printf("Tip: \nPlease run without parameter to call Version 1, or run with <read_rate> <print_out> to call Version 2.\n");
+    }
+    
+    
     return 0;
 }
