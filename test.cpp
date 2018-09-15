@@ -26,8 +26,7 @@ float get_cpu_clock_speed () {
 
 char* get_kernel_version (char* s, int len) {
     FILE* fp;
-    char* kenerl_version;
-    char buffer[128];
+    char buffer[512];
     size_t bytes_read;
     
     fp = fopen("/proc/version", "r");
@@ -37,13 +36,8 @@ char* get_kernel_version (char* s, int len) {
     if (bytes_read == 0 || bytes_read == sizeof(buffer))
         return NULL;
     buffer[bytes_read] = '\0';
-    sscanf(buffer, "Linux version %s (", kenerl_version);
-    
-
-    if(s) { 
-        strncpy(s,   kenerl_version,   len-1); 
-        s[len-1]   =   0; 
-    } 
+    sscanf(buffer, "Linux version %s (", s);
+    s[len-1] = '\0'; 
 
     return   s; 
 }
