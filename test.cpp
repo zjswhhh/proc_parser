@@ -55,11 +55,11 @@ float get_total_mem () {
 }
 
 
-int main (){
+int main (int argc, char** argv){
     char s[100];
-    printf("%s\n", get_processor_type(s));
-    printf("%f\n", get_amount_time_since_booted());
-    printf("%s\n", get_kernel_version(s));
-    printf("%f KB\n", get_total_mem());
+    printf("Processor type: %s \n", get_processor_type(s));
+    printf("Kernel Version: %s \n", get_kernel_version(s));
+    printf("The amount of memory configured into this computer: %.1f KB \n", get_total_mem());
+    printf("Amount of time since the system was last booted: %.1lf Seconds \n", get_amount_time_since_booted());
     return 0;
 }
