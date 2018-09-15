@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
+#include <string>
 using namespace std;
 
 char* get_processor_type (char* s) {
@@ -55,12 +56,13 @@ float get_total_mem () {
     return total_mem;
 }
 
-float * get_time_percentage (float* result) {
+vector<float> get_time_percentage () {
     FILE* fp;
-    double user_time, nice, sys_time, idle, total;
+    vector<float> result;
+    float user_time, nice, sys_time, idle, total;
 
     fp = fopen("/proc/stat", "r");
-    fscanf(fp, "cpu %lf %lf %lf %lf", &user_time, &nice, &sys_time, &idle);
+    fscanf(fp, "cpu %f %f %f %f", &user_time, &nice, &sys_time, &idle);
     fclose(fp);
 
     total = user_time + sys_time + idle;
@@ -81,8 +83,8 @@ int main (int argc, char** argv){
 	printf("Amount of time since the system was last booted: %.1lf Seconds \n", get_amount_time_since_booted());
     }  
     else if(argc == 3) {
-        float * time_percentage;
-        time_percentage = get_time_percentage(time_percentage);
+        vector<float> time_percentage;
+        time_percentage = get_time_percentage();
         for(int i = 0; i < 3; i++)
             printf("%f ", time_percentage[i]);
         printf("\n");
