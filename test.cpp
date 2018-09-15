@@ -59,7 +59,10 @@ double get_user_mode_time (){
     double user_time;
 
     fp = fopen("/proc/stat", "r");
-    fscanf(fp, "lf")
+    fscanf(fp, "cpu %lf", &user_time);
+    fclose(fp);
+
+    return user_time;
 }
 
 int main (int argc, char** argv){
