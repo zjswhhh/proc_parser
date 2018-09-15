@@ -6,7 +6,7 @@ using namespace std;
 
 char* get_processor_type (char* s) {
     FILE* fp;
-    char buffer[1024*10];
+    char buffer[1024];
     size_t bytes_read;
     char* match;
 
@@ -14,13 +14,13 @@ char* get_processor_type (char* s) {
     bytes_read = fread(buffer, 1, sizeof(buffer), fp);
     fclose(fp);
 
-    if(bytes_read == 0 || bytes_read == sizeof(buffer))
-        return s;
+    // if(bytes_read == 0 || bytes_read == sizeof(buffer))
+    //     return s;
     buffer[bytes_read] = '\0';
     match = strstr(buffer, "model name");
     if (match == NULL)
         return s;
-    sscanf(match, "model name	/: %[^\t\n]stepping ", s);
+    sscanf(match, "model name      : %[^\t\n] stepping ", s);
     return s;
 }
 
@@ -84,7 +84,7 @@ int main (int argc, char** argv){
         float t[3];
         get_time_percentage(t);
         for(int i = 0; i < 3; i++)
-            printf("%f ", t[i]);
+            printf("%f\% ", t[i]*100.0);
         printf("\n");
     }
     else {
