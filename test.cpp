@@ -60,23 +60,29 @@ void get_time_percentage (float result[3]) {
     FILE* fp;
     float user_time, nice, sys_time, idle, total;
     float t1, t2, t3, t4;
-    int cnt = 1;
+    char buffer[1024];
+    size_t bytes_read;
 
     fp = fopen("/proc/stat", "r");
+    bytes_read = fread(buffer, 1, sizeof(buffer), fp);
     fscanf(fp, "cpu %f %f %f %f", &user_time, &nice, &sys_time, &idle);
     /* Across All Cores */ 
-    while(fscanf(fp, "cpu%d %f %f %f %f", &t1, &t2, &t3, &t4) != EOF) {
+    fclose(fp);
+
+    buffer[bytes_read] = '\0';
+
+    while(sscanf(buffer, "cpu%d %f %f %f %f", &t1, &t2, &t3, &t4)) {
         user_time += t1;
         sys_time += t2;
         idle += t4;
     }
-    fclose(fp);
 
     total = user_time + sys_time + idle;
 
     result[0] = ((float)(user_time/total));
     result[1] = ((float)(sys_time/total));
     result[2] = ((float)(idle/total));
+    return;
 }
 
 void get_free_mem_amount_and_percentage (float result[2]) {
