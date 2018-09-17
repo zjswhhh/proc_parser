@@ -115,9 +115,11 @@ void get_rate_of_disk (double result[2]) {
     }
     fclose;
 
-    result[0] = r1 / r2 *1000.0; /* number per second*/
-    result[1] = w1 / w2 *1000.0;
-    
+    if(r1)
+        result[0] = r1 / r2 *1000.0; /* number per second*/
+    if(w1)
+        result[1] = w1 / w2 *1000.0;
+
     return;
 }
 
