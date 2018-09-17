@@ -181,10 +181,10 @@ int main (int argc, char** argv){
             timestamp += time1;
 
             /* %CPU */
-            // float tmp[3];
-            // get_time_percentage(tmp);
-            // for(int i=0; i<3; i++) 
-            //     t[i] += tmp[i];
+            float tmp[3];
+            get_time_percentage(tmp);
+            for(int i=0; i<3; i++) 
+                t[i] += tmp[i];
 
             // /* */
 
