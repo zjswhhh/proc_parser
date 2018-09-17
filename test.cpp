@@ -214,9 +214,9 @@ int main (int argc, char** argv){
                     rw[i] /= (double)time3;
                 }
     
-                printf("%%Cpu(s): %f%%, %f%%, %f%% \n", t[0], t[1], t[2]);
-                printf("Mem: %.0f KB, %f%%\n", m[0], m[1]);
-                printf("%lf %lf\n", rw[0], rw[1]);
+                printf("%%Cpu(s): %.3f%%, %.3f%%, %.3f%% \n", t[0], t[1], t[2]);
+                printf("Mem: %.0f KB, %.2f%%\n", m[0], m[1]);
+                printf("Sectors/s: %.3lf, %.3lf\n", rw[0], rw[1]);
                 t[0] = t[1] = t[2] = 0.0;
                 m[0] = m[1] = 0.0;
                 rw[0] = rw[1] = 0.0;
