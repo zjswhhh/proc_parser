@@ -171,7 +171,7 @@ long int get_rate_of_ctxt (long int result[2]) {
     
     fp = fopen("/proc/stat", "r");
     while(fgets(str, 100, fp)!= NULL){
-        // puts(str);
+        puts(str);
         if(str[0] == 'c')   /* Stop when come across "intr" */
             break;
         token = strtok(str, s);
