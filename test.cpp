@@ -163,12 +163,22 @@ void get_rate_of_disk (double result[2]) {
 
 long int get_rate_of_ctxt (long int result[2]) {
     FILE* fp;
+    char str[100];
+    const char s[2] = " ";
+    char *token;
 
     result[0] = result[1];
     
     fp = fopen("/proc/stat", "r");
-    fscanf(fp, "ctxt: %ld", &result[1]);
+    while(fgets(str, 100, fp)!= NULL){
+        // puts(str);
+        if(str[0] == 'c')   /* Stop when come across "intr" */
+            break;
+        token = strtok(str, s);
+    }
     fclose(fp);
+
+    sscanf("ctxt %ld", &result[1]);
 
     printf("%ld %ld\n", result[0], result[1]);
 
