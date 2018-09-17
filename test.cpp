@@ -199,7 +199,7 @@ int main (int argc, char** argv){
                 for(int i=0; i<3; i++) 
                     t[i] /= (float)time3;
                 printf("%%Cpu(s): %f %%, %f %%, %f %% \n", t[0], t[1], t[2]);
-                t[0] = t[1] = [2] = 0.0;
+                t[0] = t[1] = t[2] = 0.0;
             }
 
             usleep(atoi(argv[1])*1000);
