@@ -167,7 +167,7 @@ long int get_rate_of_ctxt (long int result[2]) {
     result[0] = result[1];
     
     fp = fopen("/proc/stat", "r");
-    fscanf(fp, "ctxt: %ld", &reult[1]);
+    fscanf(fp, "ctxt: %ld", &result[1]);
     fclose(fp);
 
     return result[1] - result[0];
