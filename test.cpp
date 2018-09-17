@@ -200,7 +200,7 @@ int main (int argc, char** argv){
                 printf("%%Cpu(s): %f %%, %f %%, %f %%\n", t[0]/time3, t[1]/time3, t[2]/time3);
             }
 
-            usleep(atoi(argv[1])*1000);
+            // usleep(atoi(argv[1])*1000);
         }
         
 
