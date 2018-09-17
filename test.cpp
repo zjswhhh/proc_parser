@@ -111,7 +111,7 @@ void get_free_mem_amount_and_percentage (float result[2]) {
     fclose(fp);
 
     result[0] = mem_free;
-    result[1] = mem_free/mem_total;
+    result[1] = mem_free/mem_total*100.0;
 
     return;
 }
@@ -173,6 +173,7 @@ int main (int argc, char** argv){
     else if(argc == 3) {
         int timestamp = 0;
         float t[3];
+        float m[2];
         int time1 = atoi(argv[1]);
         int time2 = atoi(argv[2]);
         int time3 = time2 / time1;
@@ -186,7 +187,11 @@ int main (int argc, char** argv){
             for(int i=0; i<3; i++) 
                 t[i] += tmp[i];
 
-            /* */
+            /* Mem */
+            float tmp_mem[2];
+            get_free_mem_amount_and_percentage(tmp_mem);
+            for(int i=0; i<2; i++)
+                m[i] += tmp_mem[i];
 
             /* */
 
@@ -196,20 +201,22 @@ int main (int argc, char** argv){
 
             /* Print */
             if(timestamp % time2 == 0){
-                printf("%d\n", timestamp);
+                // printf("%d\n", timestamp);
                 for(int i=0; i<3; i++) 
                     t[i] /= (float)time3;
-                printf("%%Cpu(s): %f %%, %f %%, %f %% \n", t[0], t[1], t[2]);
+                for(int i=0; i<2; i++)
+                    m[i] /= (float)time3;
+
+                printf("%%Cpu(s): %f%%, %f%%, %f%% \n", t[0], t[1], t[2]);
+                printf("Mem: %.0f KB, %f%%\n", m[0], m[1]*100.0);
                 t[0] = t[1] = t[2] = 0.0;
+                m[0] = m[1] = 0.0;
+
+
             }
 
-            usleep(time1*1000000);
+            usleep(time1*1000000); /* usleep: microsecond*/
         }
-        
-
-        float m[2];
-        get_free_mem_amount_and_percentage(m);
-        printf("%.0f KB %f\n", m[0], m[1]*100.0);
 
         double rw[2];
         get_rate_of_disk(rw);
