@@ -65,7 +65,7 @@ void get_time_percentage (float result[3]) {
     fp = fopen("/proc/stat", "r");
     fscanf(fp, "cpu %f %f %f %f", &user_time, &nice, &sys_time, &idle);
     /* Across All Cores */ 
-    while(fscanf(fp, "cpu%d %f %f %f %f"), &t1, &t2, &t3, &t4) {
+    while(fscanf(fp, "cpu%d %f %f %f %f", &t1, &t2, &t3, &t4) != EOF) {
         user_time += t1;
         sys_time += t2;
         idle += t4;
