@@ -198,7 +198,7 @@ int main (int argc, char** argv){
             if(timestamp == time2){
                 // for(int i=0; i<3; i++) 
                 //     t[i] /= (float)time3;
-                printf("%%Cpu(s): %f %%, %f %%, %f %%\n", t[0], t[1], t[2]);
+                printf("%%Cpu(s): %f \n", t[0]);
             }
 
             usleep(atoi(argv[1])*1000);
