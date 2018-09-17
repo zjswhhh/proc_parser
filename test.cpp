@@ -287,7 +287,7 @@ int main (int argc, char** argv){
                 m[0] = m[1] = 0.0;
                 rw[0] = rw[1] = 0.0;
                 ctxt_modified = 0; /* Reminder to myself: need to change ctxt here!!!!*/
-                process_increase 0; /* Reminder to myself: need to change process here!!!!*/
+                process_increase = 0; /* Reminder to myself: need to change process here!!!!*/
 
                 printf("\n");
             }
