@@ -203,7 +203,7 @@ int main (int argc, char** argv){
                 t[0] = t[1] = t[2] = 0.0;
             }
 
-            usleep(atoi(argv[1])*1000);
+            usleep(time1*1000000);
         }
         
 
