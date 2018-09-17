@@ -150,8 +150,7 @@ void get_rate_of_disk (double result[2]) {
             token = strtok(NULL, s);
         }
     }
-
-    fclose;
+    fclose(fp);
     // printf("%d %d %d %d", r1, r2, w1, w2);
 
     if(r1!=0 && r2!=0) 
@@ -197,8 +196,8 @@ int main (int argc, char** argv){
 
             /* Print */
             if(timestamp == time2){
-                for(int i=0; i<3; i++) 
-                    t[i] /= (float)time3;
+                // for(int i=0; i<3; i++) 
+                //     t[i] /= (float)time3;
                 printf("%%Cpu(s): %f %%, %f %%, %f %%\n", t[0], t[1], t[2]);
             }
 
