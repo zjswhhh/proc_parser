@@ -101,11 +101,13 @@ void get_rate_of_disk (double result[2]) {
     int m1, m2;
     char * device_name;
     double t1, t2, t3, t4, t5, t6, t7, t8;
-    double r1 = 0.0 , r2 = 0.0, w1 = 0.0, w2 = 0.0;
+    double r1, r2, w1, w2;
     
     fp = fopen("/proc/diskstats", "r");
+    fscanf(fp, "sda %lf %lf %lf %lf %lf %lf %lf %lf", &t1, &t2, &r1, &r2, &t5, &t6, &w1, &w2);
+
     /* Across All Disks */ 
-    while(fscanf(fp, "$d       %d %s %lf %lf %lf %lf %lf %lf %lf %lf", &m1, &m2, device_name, &t1, &t2, &t3, &t4, &t5, &t6, &t7, &t8)){
+    while(fscanf(fp, "sda%d %lf %lf %lf %lf %lf %lf %lf %lf", &t1, &t2, &t3, &t4, &t5, &t6, &t7, &t8)){
         r1 += t3;
         r2 += t4;
         w1 += t7;
@@ -115,7 +117,7 @@ void get_rate_of_disk (double result[2]) {
 
     result[0] = r1 / r2 *1000.0; /* number per second*/
     result[1] = w1 / w2 *1000.0;
-
+    
     return;
 }
 
