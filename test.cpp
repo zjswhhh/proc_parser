@@ -95,9 +95,9 @@ void get_time_percentage (float result[3]) {
 
     total = user_time + sys_time + idle;
 
-    result[0] = (float)user_time / (float)total;
-    result[1] = (float)sys_time/ (float)total;
-    result[2] = (float)idle/ (float)total;
+    result[0] = (float)user_time / (float)total * 100.0;
+    result[1] = (float)sys_time/ (float)total * 100.0;
+    result[2] = (float)idle/ (float)total * 100.0;
     return;
 }
 
@@ -171,12 +171,37 @@ int main (int argc, char** argv){
 	printf("Amount of time since the system was last booted: %.1lf Seconds \n", get_amount_time_since_booted());
     }
     else if(argc == 3) {
+        int timestamp = 0;
         float t[3];
-        get_time_percentage(t);
-        printf("The percentage of time the processor spend in User Mode, System Mode, and Idle will be: \n");
-        for(int i = 0; i < 3; i++)
-            printf("%f%%\t", t[i]*100.0);
-        printf("\n");
+        int time1 = atoi(argv[1]);
+        int time2 = atoi(argv[2]);
+        int time3 = time2 / time1;
+
+        while(1){
+            timestamp += time1;
+
+            /* %CPU */
+            float tmp[3];
+            get_time_percentage(tmp);
+            for(int i=0; i<3; i++) 
+                t[i] += tmp[i];
+
+            /* */
+
+            /* */
+
+            /* */
+
+            /* */
+
+            /* Print */
+            if(timestamp == time2){
+                printf("%%Cpu(s): %f %%, %f %%, %f %%\n");
+            }
+
+            sleep(atoi(argv[1])*1000);
+        }
+        
 
         float m[2];
         get_free_mem_amount_and_percentage(m);
@@ -185,8 +210,6 @@ int main (int argc, char** argv){
         double rw[2];
         get_rate_of_disk(rw);
         printf("%lf %lf\n", rw[0], rw[1]);
-
-
 
     }
     else {
