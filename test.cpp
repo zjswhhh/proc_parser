@@ -63,6 +63,7 @@ void get_time_percentage (float result[3]) {
 
     fp = fopen("/proc/stat", "r");
     fscanf(fp, "cpu %lf %lf %lf %lf", &user_time, &nice, &sys_time, &idle);
+
     /* Across All Cores */ 
     while(fscanf(fp, "cpu%d %lf %lf %lf %lf", &t1, &t2, &t3, &t4)) {
         user_time += t1;
@@ -70,6 +71,7 @@ void get_time_percentage (float result[3]) {
         sys_time += t2;
         idle += t4;
     }
+
     fclose(fp);
 
     total = user_time + sys_time + idle;
@@ -93,6 +95,30 @@ void get_free_mem_amount_and_percentage (float result[2]) {
 
     return;
 }
+
+void get_rate_of_disk (double result[2]) {
+    FILE* fp;
+    int m1, m2;
+    char * device_name;
+    double t1, t2, t3, t4, t5, t6, t7, t8;
+    double r1 = 0 , r2 = 0, w1 = 0, w2 = 0;
+    
+    fp = fopen("/proc/diskstats", "r");
+    /* Across All Disks */ 
+    while(fscanf(fp, "$d       %d %s %lf %lf %lf %lf %lf %lf %lf %lf", &m1, &m2, device_name, &t1, &t2, &t3, &t4, &t5, &t6, &t7, &t8)){
+        r1 += t3;
+        r2 += t4;
+        w1 += t7;
+        w2 += t8;
+    }
+    fclose;
+
+    result[0] = r1/r2*1000.0; /* number per second*/
+    result[1] = w1/w2*1000.0;
+
+    return;
+}
+
 
 int main (int argc, char** argv){
     if(argc == 1) {
