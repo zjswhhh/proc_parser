@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h> 
 #include <string>
+#include <unistd.h>
 using namespace std;
 
 char* get_kernel_version (char* s) {
