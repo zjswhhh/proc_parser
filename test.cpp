@@ -60,23 +60,18 @@ void get_time_percentage (float result[3]) {
     FILE* fp;
     double user_time, nice, sys_time, idle, total;
     double t1, t2, t3, t4;
-    char buffer[1024];
-    size_t bytes_read;
 
     fp = fopen("/proc/stat", "r");
     bytes_read = fread(buffer, 1, sizeof(buffer), fp);
     fscanf(fp, "cpu %lf %lf %lf %lf", &user_time, &nice, &sys_time, &idle);
     /* Across All Cores */ 
-    fclose(fp);
-
-    buffer[bytes_read] = '\0';
-
-    while(sscanf(buffer, "cpu%d %lf %lf %lf %lf", &t1, &t2, &t3, &t4)) {
+    while(fscanf(fp, "cpu%d %lf %lf %lf %lf", &t1, &t2, &t3, &t4)) {
         user_time += t1;
         printf("%d ", t1);
         sys_time += t2;
         idle += t4;
     }
+    fclose(fp);
 
     total = user_time + sys_time + idle;
 
