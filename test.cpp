@@ -195,11 +195,11 @@ int main (int argc, char** argv){
             /* */
 
             /* Print */
-            if(timestamp == time2){
-                // for(int i=0; i<3; i++) 
-                //     t[i] /= (float)time3;
-                printf("%f \n", t[0]);
-            }
+            // if(timestamp == time2){
+            //     // for(int i=0; i<3; i++) 
+            //     //     t[i] /= (float)time3;
+            //     printf("%f \n");
+            // }
 
             usleep(atoi(argv[1])*1000);
         }
