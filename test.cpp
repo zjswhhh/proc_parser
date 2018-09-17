@@ -209,10 +209,11 @@ int main (int argc, char** argv){
                 // printf("%d\n", timestamp);
                 for(int i=0; i<3; i++) 
                     t[i] /= (float)time3;
-                for(int i=0; i<2; i++)
+                for(int i=0; i<2; i++){
                     m[i] /= (float)time3;
                     rw[i] /= (double)time3;
-
+                }
+    
                 printf("%%Cpu(s): %f%%, %f%%, %f%% \n", t[0], t[1], t[2]);
                 printf("Mem: %.0f KB, %f%%\n", m[0], m[1]);
                 printf("%lf %lf\n", rw[0], rw[1]);
