@@ -199,7 +199,7 @@ int main (int argc, char** argv){
                 printf("%%Cpu(s): %f %%, %f %%, %f %%\n");
             }
 
-            sleep(atoi(argv[1])*1000);
+            usleep(atoi(argv[1])*1000);
         }
         
 
