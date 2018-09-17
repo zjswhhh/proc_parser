@@ -97,7 +97,7 @@ void get_free_mem_amount_and_percentage (float result[2]) {
     return;
 }
 
-void get_rate_of_disk (long int result[2]) {
+void get_rate_of_disk (double result[2]) {
     FILE* fp;
     char str[100];
     const char s[2] = " ";
@@ -132,12 +132,12 @@ void get_rate_of_disk (long int result[2]) {
     }
 
     fclose;
-    printf("%d %d %d %d", r1, r2, w1, w2);
+    // printf("%d %d %d %d", r1, r2, w1, w2);
 
-    if(r1 && r2) 
-        result[0] = r1 / r2 * 1000; /* number per second*/
-    if(w1 && w2)
-        result[1] = w1 / w2 * 1000;
+    if(r1!=0 && r2!=0) 
+        result[0] = (double)r1 / (double)r2 * 1000.0; /* number per second*/
+    if(w1!=0 && w2!=0)
+        result[1] = (double)w1 / (double)w2 * 1000.0;
 
     return;
 }
@@ -163,7 +163,7 @@ int main (int argc, char** argv){
         get_free_mem_amount_and_percentage(m);
         printf("%.0f KB %f\n", m[0], m[1]*100.0);
 
-        long int rw[2];
+        double rw[2];
         get_rate_of_disk(rw);
         printf("%lf %lf\n", rw[0], rw[1]);
 
