@@ -68,7 +68,7 @@ void get_time_percentage (float result[3]) {
     /* Across All Cores */ 
     /* Filed 2, 4, 5 */ 
     while(fgets(str, 100, fp)!= NULL){
-        puts(str);
+        // puts(str);
 
         if(str[0] == 'i')   /* Stop when come across "intr" */
             break;
@@ -77,15 +77,15 @@ void get_time_percentage (float result[3]) {
         for(int i=0; i<5; i++) {
             if(i==1){
                 user_time += atoi(token);
-                printf( " %s\n", token );
+                // printf( " %s\n", token );
             }
             if(i==3) {
                 sys_time += atoi(token);
-                printf( " %s\n", token );
+                // printf( " %s\n", token );
             }
             if(i==4){
                 idle += atoi(token);
-                printf( " %s\n", token );
+                // printf( " %s\n", token );
             }
             token = strtok(NULL, s);
         }
@@ -95,9 +95,9 @@ void get_time_percentage (float result[3]) {
 
     total = user_time + sys_time + idle;
 
-    result[0] = ((float)(user_time/total));
-    result[1] = ((float)(sys_time/total));
-    result[2] = ((float)(idle/total));
+    result[0] = (float)user_time / (float)total;
+    result[1] = (float)sys_time/ (float)total;
+    result[2] = (float)idle/ (float)total;
     return;
 }
 
