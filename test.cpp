@@ -71,11 +71,11 @@ void get_time_percentage (float result[3]) {
 
     buffer[bytes_read] = '\0';
 
-    while(sscanf(buffer, "cpu%d %f %f %f %f", &t1, &t2, &t3, &t4)) {
-        user_time += t1;
-        sys_time += t2;
-        idle += t4;
-    }
+    // while(sscanf(buffer, "cpu%d %f %f %f %f", &t1, &t2, &t3, &t4)) {
+    //     user_time += t1;
+    //     sys_time += t2;
+    //     idle += t4;
+    // }
 
     total = user_time + sys_time + idle;
 
@@ -95,6 +95,8 @@ void get_free_mem_amount_and_percentage (float result[2]) {
 
     result[0] = mem_free;
     result[1] = mem_free/mem_total;
+
+    return;
 }
 
 int main (int argc, char** argv){
