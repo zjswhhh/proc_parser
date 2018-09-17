@@ -107,7 +107,7 @@ void get_rate_of_disk (long int result[2]) {
     fp = fopen("/proc/diskstats", "r");
 
     /* Acrosss all disks */
-    while(fgets(str, 100, fp)! NULL) {
+    while(fgets(str, 100, fp)!= NULL) {
         puts(str);
         token = strtok(str, s);
         for (int i=0; i<11; i++){
