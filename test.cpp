@@ -108,30 +108,31 @@ void get_rate_of_disk (long int result[2]) {
 
     /* Acrosss all disks */
     while(fgets(str, 100, fp)!= NULL) {
-        puts(str);
+        // puts(str);
         token = strtok(str, s);
         for (int i=0; i<11; i++){
             if(i==5){
                 r1 += atoi(token);
-                printf( " %s\n", token );
+                // printf( " %s\n", token );
             }
             if(i==6){
                 r2 += atoi(token);
-                printf( " %s\n", token );
+                // printf( " %s\n", token );
             }
             if(i==9){
                 w1 += atoi(token);
-                printf( " %s\n", token );
+                // printf( " %s\n", token );
             }
             if(i==10){
                 w2 += atoi(token);
-                printf( " %s\n", token );
+                // printf( " %s\n", token );
             }
             token = strtok(NULL, s);
         }
     }
 
     fclose;
+    printf("%d %d %d %d", r1, r2, w1, w2);
 
     if(r1 && r2) 
         result[0] = r1 / r2 * 1000; /* number per second*/
