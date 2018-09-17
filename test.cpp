@@ -202,7 +202,7 @@ long int get_rate_of_process (long int result[2]) {
     }
     fclose(fp);
 
-    sscanf(str, "ctxt %ld", &result[1]);
+    sscanf(str, "processes %ld", &result[1]);
 
     // printf("%ld %ld\n", result[0], result[1]);
 
