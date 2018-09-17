@@ -98,8 +98,7 @@ void get_free_mem_amount_and_percentage (float result[2]) {
 
 void get_rate_of_disk (double result[2]) {
     FILE* fp;
-    int m1, m2;
-    char * device_name;
+    int device;
     double t1, t2, t3, t4, t5, t6, t7, t8;
     double r1, r2, w1, w2;
     
@@ -107,7 +106,7 @@ void get_rate_of_disk (double result[2]) {
     fscanf(fp, "sda %lf %lf %lf %lf %lf %lf %lf %lf", &t1, &t2, &r1, &r2, &t5, &t6, &w1, &w2);
 
     /* Across All Disks */ 
-    while(fscanf(fp, "sda%d %lf %lf %lf %lf %lf %lf %lf %lf", &t1, &t2, &t3, &t4, &t5, &t6, &t7, &t8)){
+    while(fscanf(fp, "sda%d %lf %lf %lf %lf %lf %lf %lf %lf", &device, &t1, &t2, &t3, &t4, &t5, &t6, &t7, &t8)){
         r1 += t3;
         r2 += t4;
         w1 += t7;
@@ -115,9 +114,9 @@ void get_rate_of_disk (double result[2]) {
     }
     fclose;
 
-    if(r1)
+    if(r1 && r2) 
         result[0] = r1 / r2 *1000.0; /* number per second*/
-    if(w1)
+    if(w1 && w2)
         result[1] = w1 / w2 *1000.0;
 
     return;
