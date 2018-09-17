@@ -177,32 +177,32 @@ int main (int argc, char** argv){
         int time2 = atoi(argv[2]);
         int time3 = time2 / time1;
 
-        while(1){
-            timestamp += time1;
+        // while(1){
+        //     timestamp += time1;
 
-            /* %CPU */
-            float tmp[3];
-            get_time_percentage(tmp);
-            for(int i=0; i<3; i++) 
-                t[i] += tmp[i];
+        //     /* %CPU */
+        //     float tmp[3];
+        //     get_time_percentage(tmp);
+        //     for(int i=0; i<3; i++) 
+        //         t[i] += tmp[i];
 
-            /* */
+        //     /* */
 
-            /* */
+        //     /* */
 
-            /* */
+        //     /* */
 
-            /* */
+        //     /* */
 
-            /* Print */
-            if(timestamp == time2){
-                for(int i=0; i<3; i++) 
-                    t[i] /= (float)time3;
-                printf("%f \n");
-            }
+        //     /* Print */
+        //     if(timestamp == time2){
+        //         for(int i=0; i<3; i++) 
+        //             t[i] /= (float)time3;
+        //         printf("%f \n");
+        //     }
 
-            // usleep(atoi(argv[1])*1000);
-        }
+        //     // usleep(atoi(argv[1])*1000);
+        // }
         
 
         float m[2];
