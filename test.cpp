@@ -171,8 +171,8 @@ long int get_rate_of_ctxt (long int result[2]) {
     
     fp = fopen("/proc/stat", "r");
     while(fgets(str, 100, fp)!= NULL){
-        puts(str);
-        if(str[0] == 'c' && str[1] == 't')   
+        // puts(str);
+        if(str[0] == 'c' && str[1] == 't')   /* ctxt */
             break;
         token = strtok(str, s);
     }
@@ -180,7 +180,31 @@ long int get_rate_of_ctxt (long int result[2]) {
 
     sscanf(str, "ctxt %ld", &result[1]);
 
-    printf("%ld %ld\n", result[0], result[1]);
+    // printf("%ld %ld\n", result[0], result[1]);
+
+    return result[1] - result[0];
+}
+
+long int get_rate_of_process (long int result[2]) {
+    FILE* fp;
+    char str[100];
+    const char s[2] = " ";
+    char *token;
+
+    result[0] = result[1];
+    
+    fp = fopen("/proc/stat", "r");
+    while(fgets(str, 100, fp)!= NULL){
+        // puts(str);
+        if(str[0] == 'p' && str[1] == 'r')    /* processes */
+            break;
+        token = strtok(str, s);
+    }
+    fclose(fp);
+
+    sscanf(str, "ctxt %ld", &result[1]);
+
+    // printf("%ld %ld\n", result[0], result[1]);
 
     return result[1] - result[0];
 }
@@ -188,6 +212,7 @@ long int get_rate_of_ctxt (long int result[2]) {
 
 int main (int argc, char** argv){
     if(argc == 1) {
+        /* Version 1 */
     	char s[100];
         printf("Processor type: %s \n", get_processor_type(s));
         printf("Kernel Version: %s \n", get_kernel_version(s));
@@ -195,12 +220,16 @@ int main (int argc, char** argv){
 	    printf("Amount of time since the system was last booted: %.1lf Seconds \n", get_amount_time_since_booted());
     }
     else if(argc == 3) {
+        /* Version 2 */
         int timestamp = 0;
         float t[3]; /* %CPU */
         float m[2]; /* Mem */
         double rw[2]= {0.0, 0.0}; /* Sectors/s */
         long int ctxt[2] = {0, 0}; /* Context switches/s */
         long int ctxt_modified = 0;
+        long int process[2] = {0 ,0}; /* Process creations/s */
+        long int process_increase = 0;
+
         int time1 = atoi(argv[1]);
         int time2 = atoi(argv[2]);
         int time3 = time2 / time1;
@@ -229,7 +258,8 @@ int main (int argc, char** argv){
             /* Context switches/s */
             ctxt_modified += get_rate_of_ctxt(ctxt) / time1;
 
-            /* */
+            /* Process creations/s */
+            process_increase += get_rate_of_process(process) / time1;
 
             /* Print */
             if(timestamp % time2 == 0){
@@ -243,20 +273,21 @@ int main (int argc, char** argv){
                     rw[i] /= (double)time3;
                 }
                 ctxt_modified /= time3;
+                process_increase /= time3;
     
                 /* Print out Result*/
                 printf("%%Cpu(s): %.3f%%, %.3f%%, %.3f%% \n", t[0], t[1], t[2]);
                 printf("Mem: %.0f KB, %.3f%%\n", m[0], m[1]);
                 printf("Sectors/s: %.3lf, %.3lf\n", rw[0], rw[1]);
                 printf("Context switches/s: %ld\n", ctxt_modified);
+                printf("Process creations/s: %ld\n", process_increase);
 
                 /* Re-initialize */
                 t[0] = t[1] = t[2] = 0.0;
                 m[0] = m[1] = 0.0;
                 rw[0] = rw[1] = 0.0;
                 ctxt_modified = 0; /* Reminder to myself: need to change ctxt here!!!!*/
-
-                
+                process_increase 0; /* Reminder to myself: need to change process here!!!!*/
 
                 printf("\n");
             }
