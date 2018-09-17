@@ -170,7 +170,7 @@ long int get_rate_of_ctxt (long int result[2]) {
     fscanf(fp, "ctxt: %ld", &result[1]);
     fclose(fp);
 
-    print("%ld %ld\n", result[0], result[1]);
+    printf("%ld %ld\n", result[0], result[1]);
 
     return result[1] - result[0];
 }
