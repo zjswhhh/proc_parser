@@ -170,7 +170,7 @@ long int get_rate_of_ctxt (long int result[2]) {
     fscanf(fp, "ctxt: %ld", &reult[1]);
     fclose(fp);
 
-    return result[1] - reult[0];
+    return result[1] - result[0];
 }
 
 
@@ -244,6 +244,7 @@ int main (int argc, char** argv){
                 rw[0] = rw[1] = 0.0;
                 ctxt_modified = 0; /* Reminder to myself: need to change ctxt here!!!!*/
 
+                
 
                 printf("\n");
             }
