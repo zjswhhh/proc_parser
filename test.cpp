@@ -196,11 +196,13 @@ int main (int argc, char** argv){
             /* */
 
             /* Print */
-            // if(timestamp == time2){
-            //     printf("%%Cpu(s): %f %%, %f %%, %f %%\n", t[0]/time3, t[1]/time3, t[2]/time3);
-            // }
+            if(timestamp == time2){
+                for(int i=0; i<3; i++) 
+                    t[i] /= (float)time3;
+                printf("%%Cpu(s): %f %%, %f %%, %f %%\n", t[0], t[1], t[2]);
+            }
 
-            // usleep(atoi(argv[1])*1000);
+            usleep(atoi(argv[1])*1000);
         }
         
 
