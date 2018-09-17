@@ -223,7 +223,7 @@ int main (int argc, char** argv){
         /* Version 2 */
         int timestamp = 0;
         float t[3]; /* %CPU */
-        float m[2]; /* Mem */
+        float m[2] = {0.0, 0.0}; /* Mem */
         double rw[2]= {0.0, 0.0}; /* Sectors/s */
         long int ctxt[2] = {0, 0}; /* Context switches/s */
         long int ctxt_modified = 0;
