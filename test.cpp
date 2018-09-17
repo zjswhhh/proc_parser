@@ -102,7 +102,7 @@ void get_rate_of_disk (long int result[2]) {
     size_t bytes_read;
     char buffer[1024*10];
     int m1, m2;
-    char* device;
+    int device;
     long int t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11;
     long int r1 = 0, r2 = 0, w1 = 0, w2 = 0;
     
@@ -112,7 +112,7 @@ void get_rate_of_disk (long int result[2]) {
 
     buffer[bytes_read] = '\0';
     /* Across All Disks */ 
-    while(sscanf(buffer, "%d %d %s %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf", &m1, &m2, device, &t1, &t2, &t3, &t4, &t5, &t6, &t7, &t8, &t9, &t10, &t11)){
+    while(sscanf(buffer, "%d %d sda%d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf", &m1, &m2, device, &t1, &t2, &t3, &t4, &t5, &t6, &t7, &t8, &t9, &t10, &t11)){
         r1 += t3;
         r2 += t4;
         w1 += t7;
