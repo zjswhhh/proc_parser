@@ -140,6 +140,10 @@ int main (int argc, char** argv){
         get_free_mem_amount_and_percentage(m);
         printf("%.0f KB %f\n", m[0], m[1]*100.0);
 
+        double rw[2];
+        get_rate_of_disk(rw);
+        printf("%lf %lf\n", rw[0], rw[1]);
+
     }
     else {
     	printf("Tip: \nPlease run without parameter to call Version 1, or run with <read_rate> <print_out> to call Version 2.\n");
