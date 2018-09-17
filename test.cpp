@@ -161,6 +161,18 @@ void get_rate_of_disk (double result[2]) {
     return;
 }
 
+long int get_rate_of_ctxt (long int result[2]) {
+    FILE* fp;
+
+    result[0] = reult[1];
+    
+    fp = fopen("/proc/stat", "r");
+    fscanf(fp, "ctxt: %ld", &reult[1]);
+    fclose(fp);
+
+    return result[1] - reult[0];
+}
+
 
 int main (int argc, char** argv){
     if(argc == 1) {
@@ -168,13 +180,15 @@ int main (int argc, char** argv){
         printf("Processor type: %s \n", get_processor_type(s));
         printf("Kernel Version: %s \n", get_kernel_version(s));
         printf("The amount of memory configured into this computer: %.1f KB \n", get_total_mem());
-	printf("Amount of time since the system was last booted: %.1lf Seconds \n", get_amount_time_since_booted());
+	    printf("Amount of time since the system was last booted: %.1lf Seconds \n", get_amount_time_since_booted());
     }
     else if(argc == 3) {
         int timestamp = 0;
-        float t[3];
-        float m[2];
-        double rw[2]= {0.0, 0.0};
+        float t[3]; /* %CPU */
+        float m[2]; /* Mem */
+        double rw[2]= {0.0, 0.0}; /* Sectors/s */
+        long int ctxt[2] = {0, 0}; /* Context switches/s */
+        long int ctxt_modified = 0;
         int time1 = atoi(argv[1]);
         int time2 = atoi(argv[2]);
         int time3 = time2 / time1;
@@ -200,27 +214,38 @@ int main (int argc, char** argv){
             for(int i=0; i<2; i++)
                 rw[i] += tmp_rw[i];
 
-            /* */
+            /* Context switches/s */
+            ctxt_modified += get_rate_of_ctxt(ctxt) / time1;
 
             /* */
 
             /* Print */
             if(timestamp % time2 == 0){
                 // printf("%d\n", timestamp);
+
+                /* Take the average */
                 for(int i=0; i<3; i++) 
                     t[i] /= (float)time3;
                 for(int i=0; i<2; i++){
                     m[i] /= (float)time3;
                     rw[i] /= (double)time3;
                 }
+                ctxt_modified /= time3;
     
+                /* Print out Result*/
                 printf("%%Cpu(s): %.3f%%, %.3f%%, %.3f%% \n", t[0], t[1], t[2]);
-                printf("Mem: %.0f KB, %.2f%%\n", m[0], m[1]);
+                printf("Mem: %.0f KB, %.3f%%\n", m[0], m[1]);
                 printf("Sectors/s: %.3lf, %.3lf\n", rw[0], rw[1]);
+                printf("Context switches/s: %ld\n", ctxt_modified);
+
+                /* Re-initialize */
                 t[0] = t[1] = t[2] = 0.0;
                 m[0] = m[1] = 0.0;
                 rw[0] = rw[1] = 0.0;
+                ctxt_modified = 0; /* Reminder to myself: need to change ctxt here!!!!*/
 
+
+                printf("\n");
             }
 
             usleep(time1*1000000); /* usleep: microsecond*/
