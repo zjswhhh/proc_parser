@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <vector>
+#include <stdlib.h> 
 #include <string>
 using namespace std;
 
@@ -99,26 +99,32 @@ void get_free_mem_amount_and_percentage (float result[2]) {
 
 void get_rate_of_disk (long int result[2]) {
     FILE* fp;
-    size_t bytes_read;
-    char buffer[1024*1000];
-    int m1, m2;
-    int device;
-    long int t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11;
+    char str[100];
+    const char s[2] = " ";
+    char *token;
     long int r1 = 0, r2 = 0, w1 = 0, w2 = 0;
     
     fp = fopen("/proc/diskstats", "r");
-    bytes_read = fread(buffer, 1, sizeof(buffer), fp);
-    fclose;
 
-    buffer[bytes_read] = '\0';
-    /* Across All Disks */ 
-    while(sscanf(buffer, "%d %d sda%d %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld", &m1, &m2, device, &t1, &t2, &t3, &t4, &t5, &t6, &t7, &t8, &t9, &t10, &t11)){
-        r1 += t3;
-        r2 += t4;
-        w1 += t7;
-        w2 += t8;
-        printf("%d \n", device);
+    /* Acrosss all disks */
+    while(fgets(str, 100, fp)! NULL) {
+        puts(str);
+        token = strtok(str, s);
+        for (int i=0; i<11; i++){
+            if(i==5)
+                r1 += atoi(token);
+            if(i==6)
+                r2 += atoi(token);
+            if(i==9)
+                w1 += atoi(token);
+            if(i==10)
+                w2 += atoi(token);
+            printf( " %s\n", token );
+            token = strtok(NULL, s);
+        }
     }
+
+    fclose;
 
     if(r1 && r2) 
         result[0] = r1 / r2 * 1000; /* number per second*/
