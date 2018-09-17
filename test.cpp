@@ -58,19 +58,33 @@ float get_total_mem () {
 
 void get_time_percentage (float result[3]) {
     FILE* fp;
-    double user_time, nice, sys_time, idle, total;
-    double t1, t2, t3, t4;
-    int core;
+    char str[100];
+    long int user_time = 0, sys_time = 0, idle = 0, total = 0;
+    const char s[2] = " ";
+    char *token;
 
     fp = fopen("/proc/stat", "r");
-    fscanf(fp, "cpu %lf %lf %lf %lf", &user_time, &nice, &sys_time, &idle);
 
     /* Across All Cores */ 
-    while(fscanf(fp, "cpu%d %lf %lf %lf %lf", &core, &t1, &t2, &t3, &t4)) {
-        user_time += t1;
-        sys_time += t2;
-        idle += t4;
-        printf("%d\n", core);
+    /* Filed 2, 4, 5 */ 
+    while(fgets(str, 100, fp)!= NULL){
+        puts(str);
+        token = strtok(str, s);
+        for(int i=0; i<5; i++) {
+            if(i==1){
+                user_time += atoi(token);
+                printf( " %s\n", token );
+            }
+            if(i==3) {
+                sys_time += atoi(token);
+                printf( " %s\n", token );
+            }
+            if(i==4){
+                idle += atoi(token);
+                printf( " %s\n", token );
+            }
+            token = strtok(NULL, s);
+        }
     }
 
     fclose(fp);
@@ -107,6 +121,7 @@ void get_rate_of_disk (double result[2]) {
     fp = fopen("/proc/diskstats", "r");
 
     /* Acrosss all disks */
+    /* Filed 6, 7, 10, 11*/ 
     while(fgets(str, 100, fp)!= NULL) {
         // puts(str);
         token = strtok(str, s);
@@ -166,6 +181,8 @@ int main (int argc, char** argv){
         double rw[2];
         get_rate_of_disk(rw);
         printf("%lf %lf\n", rw[0], rw[1]);
+
+
 
     }
     else {
