@@ -111,6 +111,7 @@ void get_rate_of_disk (double result[2]) {
         r2 += t4;
         w1 += t7;
         w2 += t8;
+        printf("%lf ", t8);
     }
     fclose;
 
