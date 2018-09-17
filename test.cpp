@@ -174,6 +174,7 @@ int main (int argc, char** argv){
         int timestamp = 0;
         float t[3];
         float m[2];
+        double rw[2];
         int time1 = atoi(argv[1]);
         int time2 = atoi(argv[2]);
         int time3 = time2 / time1;
@@ -193,7 +194,11 @@ int main (int argc, char** argv){
             for(int i=0; i<2; i++)
                 m[i] += tmp_mem[i];
 
-            /* */
+            /* Sectors/s */
+            double tmp_rw[2];
+            get_rate_of_disk(tmp_rw);
+            for(int i=0; i<2; i++)
+                rw[i] += tmp_rw[i];
 
             /* */
 
@@ -206,21 +211,19 @@ int main (int argc, char** argv){
                     t[i] /= (float)time3;
                 for(int i=0; i<2; i++)
                     m[i] /= (float)time3;
+                    rw[i] /= (double)time3;
 
                 printf("%%Cpu(s): %f%%, %f%%, %f%% \n", t[0], t[1], t[2]);
-                printf("Mem: %.0f KB, %f%%\n", m[0], m[1]*100.0);
+                printf("Mem: %.0f KB, %f%%\n", m[0], m[1]);
+                printf("%lf %lf\n", rw[0], rw[1]);
                 t[0] = t[1] = t[2] = 0.0;
                 m[0] = m[1] = 0.0;
-
+                rw[0] = rw[1] = 0.0;
 
             }
 
             usleep(time1*1000000); /* usleep: microsecond*/
         }
-
-        double rw[2];
-        get_rate_of_disk(rw);
-        printf("%lf %lf\n", rw[0], rw[1]);
 
     }
     else {
