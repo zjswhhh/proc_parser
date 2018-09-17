@@ -100,7 +100,7 @@ void get_free_mem_amount_and_percentage (float result[2]) {
 void get_rate_of_disk (long int result[2]) {
     FILE* fp;
     size_t bytes_read;
-    char buffer[1024*100];
+    char buffer[1024*1000];
     int m1, m2;
     int device;
     long int t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11;
