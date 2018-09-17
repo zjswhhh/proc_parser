@@ -67,8 +67,12 @@ void get_time_percentage (float result[3]) {
 
     /* Across All Cores */ 
     /* Filed 2, 4, 5 */ 
-    while(fgets(str, 100, fp)!= "i"){
+    while(fgets(str, 100, fp)!= NULL){
         puts(str);
+
+        if(str[0] == 'i')   /* Stop when come across "intr" */
+            break;
+
         token = strtok(str, s);
         for(int i=0; i<5; i++) {
             if(i==1){
