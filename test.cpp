@@ -71,11 +71,12 @@ void get_time_percentage (float result[3]) {
 
     buffer[bytes_read] = '\0';
 
-    // while(sscanf(buffer, "cpu%d %f %f %f %f", &t1, &t2, &t3, &t4)) {
-    //     user_time += t1;
-    //     sys_time += t2;
-    //     idle += t4;
-    // }
+    while(sscanf(buffer, "cpu%d %f %f %f %f", &t1, &t2, &t3, &t4)) {
+        user_time += t1;
+        printf("%d ", t1);
+        sys_time += t2;
+        idle += t4;
+    }
 
     total = user_time + sys_time + idle;
 
