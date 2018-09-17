@@ -164,7 +164,7 @@ void get_rate_of_disk (double result[2]) {
 long int get_rate_of_ctxt (long int result[2]) {
     FILE* fp;
 
-    result[0] = reult[1];
+    result[0] = result[1];
     
     fp = fopen("/proc/stat", "r");
     fscanf(fp, "ctxt: %ld", &reult[1]);
