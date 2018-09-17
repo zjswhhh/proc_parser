@@ -101,7 +101,7 @@ void get_rate_of_disk (double result[2]) {
     int m1, m2;
     char * device_name;
     double t1, t2, t3, t4, t5, t6, t7, t8;
-    double r1 = 0 , r2 = 0, w1 = 0, w2 = 0;
+    double r1 = 0.0 , r2 = 0.0, w1 = 0.0, w2 = 0.0;
     
     fp = fopen("/proc/diskstats", "r");
     /* Across All Disks */ 
@@ -113,8 +113,8 @@ void get_rate_of_disk (double result[2]) {
     }
     fclose;
 
-    result[0] = r1/r2*1000.0; /* number per second*/
-    result[1] = w1/w2*1000.0;
+    result[0] = r1 / r2 *1000.0; /* number per second*/
+    result[1] = w1 / w2 *1000.0;
 
     return;
 }
