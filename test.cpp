@@ -67,7 +67,7 @@ void get_time_percentage (float result[3]) {
 
     /* Across All Cores */ 
     /* Filed 2, 4, 5 */ 
-    while(fgets(str, 100, fp)!= NULL){
+    while(fgets(str, 100, fp)!= "i"){
         puts(str);
         token = strtok(str, s);
         for(int i=0; i<5; i++) {
@@ -122,7 +122,7 @@ void get_rate_of_disk (double result[2]) {
 
     /* Acrosss all disks */
     /* Filed 6, 7, 10, 11*/ 
-    while(fgets(str, 100, fp)!= 'i') {
+    while(fgets(str, 100, fp)!= NULL) {
         // puts(str);
         token = strtok(str, s);
         for (int i=0; i<11; i++){
