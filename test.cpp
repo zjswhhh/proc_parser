@@ -174,7 +174,7 @@ int main (int argc, char** argv){
         int timestamp = 0;
         float t[3];
         float m[2];
-        double rw[2];
+        double rw[2]= {0.0, 0.0};
         int time1 = atoi(argv[1]);
         int time2 = atoi(argv[2]);
         int time3 = time2 / time1;
