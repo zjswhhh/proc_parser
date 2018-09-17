@@ -66,7 +66,7 @@ void get_time_percentage (float result[3]) {
     fscanf(fp, "cpu %lf %lf %lf %lf", &user_time, &nice, &sys_time, &idle);
 
     /* Across All Cores */ 
-    while(fscanf(fp, "cpu%[^1234567890] %lf %lf %lf %lf", &t1, &t2, &t3, &t4)) {
+    while(fscanf(fp, "cpu%d %lf %lf %lf %lf", &core, &t1, &t2, &t3, &t4)) {
         user_time += t1;
         sys_time += t2;
         idle += t4;
@@ -97,14 +97,14 @@ void get_free_mem_amount_and_percentage (float result[2]) {
     return;
 }
 
-void get_rate_of_disk (double result[2]) {
+void get_rate_of_disk (long int result[2]) {
     FILE* fp;
     size_t bytes_read;
     char buffer[1024*10];
     int m1, m2;
     char* device;
-    double t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11;
-    double r1 = 0.0, r2 = 0.0, w1 = 0.0, w2 = 0.0;
+    long int t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11;
+    long int r1 = 0, r2 = 0, w1 = 0, w2 = 0;
     
     fp = fopen("/proc/diskstats", "r");
     bytes_read = fread(buffer, 1, sizeof(buffer), fp);
@@ -121,9 +121,9 @@ void get_rate_of_disk (double result[2]) {
     }
 
     if(r1 && r2) 
-        result[0] = r1 / r2 *1000.0; /* number per second*/
+        result[0] = r1 / r2 * 1000; /* number per second*/
     if(w1 && w2)
-        result[1] = w1 / w2 *1000.0;
+        result[1] = w1 / w2 * 1000;
 
     return;
 }
@@ -149,7 +149,7 @@ int main (int argc, char** argv){
         get_free_mem_amount_and_percentage(m);
         printf("%.0f KB %f\n", m[0], m[1]*100.0);
 
-        double rw[2];
+        long int rw[2];
         get_rate_of_disk(rw);
         printf("%lf %lf\n", rw[0], rw[1]);
 
