@@ -185,13 +185,13 @@ long int get_rate_of_ctxt (long int result[2]) {
     return result[1] - result[0];
 }
 
-long int get_rate_of_process (long int result[2]) {
+double get_rate_of_process () {
     FILE* fp;
     char str[100];
     const char s[2] = " ";
     char *token;
-
-    result[0] = result[1];
+    double process;
+    double booted_time = get_amount_time_since_booted();
     
     fp = fopen("/proc/stat", "r");
     while(fgets(str, 100, fp)!= NULL){
@@ -202,11 +202,9 @@ long int get_rate_of_process (long int result[2]) {
     }
     fclose(fp);
 
-    sscanf(str, "processes %ld", &result[1]);
+    sscanf(str, "processes %lf", &process);
 
-    printf("%ld %ld\n", result[0], result[1]);
-
-    return result[1] - result[0];
+    return process / booted_time;
 }
 
 
@@ -227,8 +225,7 @@ int main (int argc, char** argv){
         double rw[2]= {0.0, 0.0}; /* Sectors/s */
         long int ctxt[2] = {0, 0}; /* Context switches/s */
         long int ctxt_modified = 0;
-        long int process[2] = {0 ,0}; /* Process creations/s */
-        long int process_increase = 0;
+        double process_rate= 0.0 ; /* Process creations/s */
 
         int time1 = atoi(argv[1]);
         int time2 = atoi(argv[2]);
@@ -259,7 +256,7 @@ int main (int argc, char** argv){
             ctxt_modified += get_rate_of_ctxt(ctxt) / time1;
 
             /* Process creations/s */
-            process_increase += get_rate_of_process(process) / time1;
+            process_rate += get_rate_of_process();
 
             /* Print */
             if(timestamp % time2 == 0){
@@ -273,22 +270,21 @@ int main (int argc, char** argv){
                     rw[i] /= (double)time3;
                 }
                 ctxt_modified /= time3;
-                process_increase /= time3;
+                process_rate /= time3;
     
                 /* Print out Result*/
                 printf("%%Cpu(s): %.3f%%, %.3f%%, %.3f%% \n", t[0], t[1], t[2]);
                 printf("Mem: %.0f KB, %.3f%%\n", m[0], m[1]);
                 printf("Sectors/s: %.3lf, %.3lf\n", rw[0], rw[1]);
                 printf("Context switches/s: %ld\n", ctxt_modified);
-                printf("Process creations/s: %ld\n", process_increase);
+                printf("Process creations/s: %ld\n", process_rate);
 
                 /* Re-initialize */
                 t[0] = t[1] = t[2] = 0.0;
                 m[0] = m[1] = 0.0;
                 rw[0] = rw[1] = 0.0;
-                ctxt_modified = 0; /* Reminder to myself: need to change ctxt here!!!!*/
-                process_increase = 0; /* Reminder to myself: need to change process here!!!!*/
-
+                ctxt_modified = 0; 
+                process_rate = 0; 
                 printf("\n");
             }
 
